@@ -1,10 +1,10 @@
-const { customError } = require("./customErrorClass");
+const { customError } = require("./customError");
 
-const customErrorHandler = (err, req, res, next) => {
+const customErrHandler = (err, req, res, next) => {
   if (err instanceof customError) {
     return res.status(err.status).json({ message: err.message });
   }
   return res.status(500).json({ message: "An error ocurred" });
 };
 
-module.exports = customErrorHandler;
+module.exports = customErrHandler;

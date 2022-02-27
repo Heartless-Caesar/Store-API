@@ -1,17 +1,17 @@
 const express = require("express");
 const app = express();
-const notFound = require("not-found.js");
-const customErrorHandler = require("./customErrorHandler");
+const customErrHandler = require("./customErrorHandler");
+const notFound = require("./not-found.js");
 const connectDB = require("./connect");
-const port = process.env.PORT || 5000;
+const port = 5000;
 
-app.use("/app");
+//app.use("/app");
 
 app.use(notFound);
 
 app.use(express.json());
 
-app.use(customErrorHandler);
+app.use(customErrHandler);
 
 //MAIN PAGE ROUTES
 app.get("/products", (req, res) => {
