@@ -1,10 +1,9 @@
 const { customError } = require("./customErrorHandler");
-const notUse = require("not-found.js");
+const notFound = require("not-found.js");
 const express = require("express");
 const connectDB = require("./connect");
 const app = express();
 const port = process.env.PORT || 5000;
-require("dotenv").config();
 
 app.use(notFound);
 app.use(express.json());
@@ -20,7 +19,7 @@ app.get("/products", (req, res) => {
 
 const start = async () => {
   try {
-    await connect;
+    await connectDB;
     app.listen(port, () => {
       console.log(`Port ${port} is listening...`);
     });

@@ -4,4 +4,8 @@ const getAllProducts = asyncWrapper(async (req, res) => {
   res.status(201).send("Find all test");
 });
 
-module.exports = { getAllProducts };
+const getAllProductsStatic = asyncWrapper(async (req, res) => {
+  res.status(201).send("Find all static test");
+});
+
+module.exports = { getAllProducts, getAllProductsStatic };
