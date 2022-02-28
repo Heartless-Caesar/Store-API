@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
-const customErrHandler = require("./customErrorHandler");
-const notFound = require("./not-found.js");
+const customErrHandler = require("./middleware/customErrorHandler");
+const notFound = require("./middleware/not-found.js");
 const connectDB = require("./connect");
 const port = 5000;
 
