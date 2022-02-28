@@ -2,12 +2,13 @@ const customErrHandler = require("./middleware/customErrorHandler");
 const notFound = require("./middleware/not-found.js");
 const connectDB = require("./connect");
 const express = require("express");
+const { router } = require("./routes");
 const app = express();
 const port = 5000;
 
 require("express-async-errors");
 
-//app.use("/app");
+app.use("/app", router);
 
 app.use(notFound);
 
