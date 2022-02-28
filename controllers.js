@@ -1,5 +1,3 @@
-const asyncWrapper = require("./asyncWrapper");
-
 const getAllProducts = async (req, res) => {
   res.status(201).send("Find all test");
 };
