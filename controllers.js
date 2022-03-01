@@ -6,7 +6,7 @@ const getAllProductsStatic = async (req, res) => {
 };
 
 const getProductsQuery = async (req, res) => {
-  const { featured, name, price } = req.query;
+  const { featured, name, company } = req.query;
   const queryObject = {};
 
   if (name) {
@@ -14,8 +14,8 @@ const getProductsQuery = async (req, res) => {
     queryObject.name = { $regex: name, $options: "i" };
   }
 
-  if (price) {
-    queryObject.price = price;
+  if (company) {
+    queryObject.price = company;
   }
 
   if (featured) {
