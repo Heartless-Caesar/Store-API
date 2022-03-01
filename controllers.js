@@ -8,7 +8,7 @@ const getAllProductsStatic = async (req, res) => {
 
 //SEARCH FUNCTIONALITY
 const getProductsQuery = async (req, res) => {
-  const { featured, name, company } = req.query;
+  const { featured, name, company, sort } = req.query;
   //OBJECT TO SERVE AS THE QUERIED OUTPUT
   const queryObject = {};
 
@@ -18,7 +18,7 @@ const getProductsQuery = async (req, res) => {
   }
 
   if (company) {
-    queryObject.price = company;
+    queryObject.company = company;
   }
 
   if (featured) {
@@ -26,9 +26,9 @@ const getProductsQuery = async (req, res) => {
     queryObject.featured = featured === "true" ? true : false;
   }
   //ALL FOUND OBJECTS THAT MATCH THE PARAMETERS SPECIFIED IN THE QUERY PARAMS
-  const result = Products.find(queryObject);
+  let result = Products.find(queryObject);
 
-  if (result) {
+  if (sort) {
     const sortedList = sort.split(",").join(" ");
     result = result.sort(sortedList);
   } else {
@@ -40,4 +40,4 @@ const getProductsQuery = async (req, res) => {
   res.status(201).json({ foundProducts: products, numHits: products.length });
 };
 
-module.exports = { getAllProducts, getAllProductsStatic };
+module.exports = { getProductsQuery, getAllProductsStatic };
