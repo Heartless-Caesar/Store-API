@@ -29,12 +29,15 @@ const getProductsQuery = async (req, res) => {
   let result = Products.find(queryObject);
 
   if (sort) {
+    //THE SORTED DOCUMENTS WILL BE SET IN A FILTERED ARRAY
     const sortedList = sort.split(",").join(" ");
+    //RESULTING SORTED DOCUMENTS
     result = result.sort(sortedList);
   } else {
     result = result.sort("createAt");
   }
 
+  //QUERIED AND SORTED DOCUMENTS IF SET TO DO SO
   const products = await result;
 
   res.status(201).json({ foundProducts: products, numHits: products.length });
