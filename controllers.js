@@ -22,7 +22,10 @@ const getProductsQuery = async (req, res) => {
     //IF THE FEATURED PROPERTY OF THE ELEMENT IS TRUE THE QUERYOBJECT PROPERTY WILL BE TRUE IF NOT IT WILL BE SET TO FALSE
     queryObject.featured = featured === "true" ? true : false;
   }
-  res.status(201).send("Find all test");
+  //ALL FOUND OBJECTS THAT MATCH THE PARAMETERS SPECIFIED IN THE QUERY PARAMS
+  const products = await Products.find(queryObject);
+
+  res.status(201).json({ foundProducts: products, numHits: products.length });
 };
 
 module.exports = { getAllProducts, getAllProductsStatic };
