@@ -2,7 +2,7 @@ const Products = require("./productSchema");
 
 const getAllProductsStatic = async (req, res) => {
   //GET ALL OBJECTS AND SORT THEM ALPHABETICALLY
-  const allProducts = await Products.find({}).sort("name");
+  const allProducts = await Products.find({}).sort("name, price");
   res.status(201).json({ content: allProducts });
 };
 
