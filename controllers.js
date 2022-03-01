@@ -6,6 +6,7 @@ const getAllProductsStatic = async (req, res) => {
   res.status(201).json({ content: allProducts });
 };
 
+//SEARCH FUNCTIONALITY
 const getProductsQuery = async (req, res) => {
   const { featured, name, company } = req.query;
   const queryObject = {};
