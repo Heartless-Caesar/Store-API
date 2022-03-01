@@ -1,4 +1,4 @@
-const Products = require("./productSchema");
+const Products = require("./models/productSchema");
 
 const getAllProductsStatic = async (req, res) => {
   //GET ALL OBJECTS AND SORT THEM ALPHABETICALLY
