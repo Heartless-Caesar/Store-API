@@ -1,7 +1,7 @@
 const Products = require("./models/productSchema");
 
 const getAllProductsStatic = async (req, res) => {
-  //GET ALL OBJECTS AND SORT THEM ALPHABETICALLY
+  //GET ALL OBJECTS AND SORT THEM ALPHABETICALLY AND NUMERICALLY
   const allProducts = await Products.find({}).sort("name, price");
   res.status(201).json({ content: allProducts });
 };
@@ -9,6 +9,7 @@ const getAllProductsStatic = async (req, res) => {
 //SEARCH FUNCTIONALITY
 const getProductsQuery = async (req, res) => {
   const { featured, name, company } = req.query;
+  //OBJECT TO SERVE AS THE QUERIED OUTPUT
   const queryObject = {};
 
   if (name) {
@@ -21,11 +22,20 @@ const getProductsQuery = async (req, res) => {
   }
 
   if (featured) {
-    //IF THE FEATURED PROPERTY OF THE ELEMENT IS TRUE THE QUERYOBJECT PROPERTY WILL BE TRUE IF NOT IT WILL BE SET TO FALSE
+    //IF THE FEATURED PROPERTY OF THE ELEMENT IS TRUE THE QUERYOBJECT PROPERTY WILL BE TRUE IF NOT FALSE
     queryObject.featured = featured === "true" ? true : false;
   }
   //ALL FOUND OBJECTS THAT MATCH THE PARAMETERS SPECIFIED IN THE QUERY PARAMS
-  const products = await Products.find(queryObject);
+  const result = Products.find(queryObject);
+
+  if (result) {
+    const sortedList = sort.split(",").join(" ");
+    result = result.sort(sortedList);
+  } else {
+    result = result.sort("createAt");
+  }
+
+  const products = await result;
 
   res.status(201).json({ foundProducts: products, numHits: products.length });
 };
