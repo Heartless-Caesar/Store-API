@@ -1,6 +1,6 @@
 # Store-API
 
-This API was made with the idea of being the back-end of my university project.
+This API was made with the idea of being a template for my university project's backend.
 
 ## Essential Features
 
