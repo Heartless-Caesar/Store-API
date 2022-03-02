@@ -8,7 +8,8 @@ const getAllProductsStatic = async (req, res) => {
 
 //SEARCH FUNCTIONALITY
 const getProductsQuery = async (req, res) => {
-  const { featured, name, company, sort, fields } = req.query;
+  const { featured, name, company, sort, fields, numericFields } = req.query;
+
   //OBJECT TO SERVE AS THE QUERIED OUTPUT
   const queryObject = {};
 
@@ -31,6 +32,7 @@ const getProductsQuery = async (req, res) => {
   if (sort) {
     //THE SORTED DOCUMENTS WILL BE SET IN A FILTERED ARRAY
     const sortedList = sort.split(",").join(" ");
+
     //RESULTING SORTED DOCUMENTS
     result = result.sort(sortedList);
   } else {
@@ -40,6 +42,33 @@ const getProductsQuery = async (req, res) => {
   if (fields) {
     const fieldsList = fields.split(",").join(" ");
     result = result.select(fieldsList);
+  }
+
+  if (numericFields) {
+    const operators = {
+      ">": "$gt",
+      "<": "$lt",
+      "=": "$eq",
+      "<=": "$lte",
+      ">=": "$gte",
+    };
+
+    const regex = /\b(<|>|<=|>=|=)\b/g;
+
+    let filters = numericFields.replace(
+      regex,
+      (match) => `-${operators[match]}-`
+    );
+
+    const options = ["rating", "price"];
+
+    filters = filters.split(",").forEach((item) => {
+      const [field, operator, value] = item.split("-");
+
+      if (options.includes(field)) {
+        queryObject[field] = { [operator]: Number(value) };
+      }
+    });
   }
 
   //QUERIED AND SORTED DOCUMENTS IF SET TO DO SO
