@@ -41,10 +41,12 @@ const getProductsQuery = async (req, res) => {
 
   if (fields) {
     const fieldsList = fields.split(",").join(" ");
+    //THE SELECT OPERATOR WILL DISPLAY ONLY THE ELEMENTS DESIRED IN THE FIELDS PARAM
     result = result.select(fieldsList);
   }
 
   if (numericFields) {
+    //ALL OPERATORS FOR THE NUMERIC FILTERING
     const operators = {
       ">": "$gt",
       "<": "$lt",
@@ -55,16 +57,21 @@ const getProductsQuery = async (req, res) => {
 
     const regex = /\b(<|>|<=|>=|=)\b/g;
 
+    //REPLACES THE OPERATOR STRING WITH THE VALUE INTERPRETED BY MONGOOSE
     let filters = numericFields.replace(
       regex,
       (match) => `-${operators[match]}-`
     );
 
+    //INSERT THE PARAMETERS FOR THE NUMERIC FILTERING
     const options = ["rating", "price"];
 
+    //FINDS EVERY JSON DEFINED DOCUMENT IN MONGO
     filters = filters.split(",").forEach((item) => {
+      //SEPARATING THE PROPERY ELEMENTS THAT APPEAR IN THE OUTPUT
       const [field, operator, value] = item.split("-");
 
+      //QUERYING THE DATABASE FOR THE GIVEN NUMERIC FIELD PARAMETERS
       if (options.includes(field)) {
         queryObject[field] = { [operator]: Number(value) };
       }
