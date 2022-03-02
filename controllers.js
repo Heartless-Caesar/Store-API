@@ -8,7 +8,7 @@ const getAllProductsStatic = async (req, res) => {
 
 //SEARCH FUNCTIONALITY
 const getProductsQuery = async (req, res) => {
-  const { featured, name, company, sort } = req.query;
+  const { featured, name, company, sort, fields } = req.query;
   //OBJECT TO SERVE AS THE QUERIED OUTPUT
   const queryObject = {};
 
@@ -35,6 +35,11 @@ const getProductsQuery = async (req, res) => {
     result = result.sort(sortedList);
   } else {
     result = result.sort("createAt");
+  }
+
+  if (fields) {
+    const fieldsList = fields.split(",").join(" ");
+    result = result.select(fieldsList);
   }
 
   //QUERIED AND SORTED DOCUMENTS IF SET TO DO SO
