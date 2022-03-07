@@ -33,7 +33,7 @@ const getProductsQuery = async (req, res) => {
     //THE SORTED DOCUMENTS WILL BE SET IN A FILTERED ARRAY
     const sortedList = sort.split(",").join(" ");
 
-    //RESULTING SORTED DOCUMENTS
+    //RESULTING SORTED DOCUMENTS, EITHER ALPHABETICAL OR NUMERICALLY
     result = result.sort(sortedList);
   } else {
     result = result.sort("createAt");
@@ -45,6 +45,8 @@ const getProductsQuery = async (req, res) => {
     result = result.select(fieldsList);
   }
 
+  //WILL FILTER BASED ON THE OPERATOR USED AND THE VALUE PROVIDED
+  //EXAMPLE: ?numericFields=price>20
   if (numericFields) {
     //ALL OPERATORS FOR THE NUMERIC FILTERING
     const operators = {
