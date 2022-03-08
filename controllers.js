@@ -80,7 +80,7 @@ const getProductsQuery = async (req, res) => {
     });
   }
 
-  //QUERIED AND SORTED DOCUMENTS IF SET TO DO SO
+  //QUERIED AND SORTED DOCUMENTS IF SET TO
   const products = await result;
 
   res.status(201).json({ foundProducts: products, numHits: products.length });
